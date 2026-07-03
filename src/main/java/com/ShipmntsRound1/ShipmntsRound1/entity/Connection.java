@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "connections")
 @AllArgsConstructor
@@ -18,9 +20,22 @@ public class Connection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private Integer fromUserId;
 
-    @OneToMany
+    @Column(nullable = false)
+    private ConnectionStatus status;
+
+    @Column
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(nullable = true)
+    private LocalDateTime acceptedAt;
+
+    @Column(nullable = true)
+    private LocalDateTime rejectedAt;
+
+    @ManyToOne
     @JoinColumn(name = "toUserId")
     private User toUser;
 }

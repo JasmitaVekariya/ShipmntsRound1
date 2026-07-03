@@ -25,4 +25,16 @@ public class User {
 
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Connection> connections = new ArrayList<>();
+
+    public void addConnection(Connection c)
+    {
+        connections.add(c);
+        c.setToUser(this);
+    }
+
+    public void removeConnection(Connection c)
+    {
+        connections.remove(c);
+        c.setToUser(null);
+    }
 }
