@@ -1,5 +1,7 @@
 package com.ShipmntsRound1.ShipmntsRound1.controller;
 
+import com.ShipmntsRound1.ShipmntsRound1.dto.ConnectionResponsReq;
+import com.ShipmntsRound1.ShipmntsRound1.dto.ConnectionResponsRes;
 import com.ShipmntsRound1.ShipmntsRound1.dto.UserConnectionReq;
 import com.ShipmntsRound1.ShipmntsRound1.dto.UserConnectionResponse;
 import com.ShipmntsRound1.ShipmntsRound1.service.ConnectionService;
@@ -21,5 +23,9 @@ public class ConnectionController {
         return connectionService.ConnectionReq(u, fromUserId);
     }
 
-
+    @PatchMapping("/respond")
+    public ConnectionResponsRes connectionRespod(@RequestHeader(name = "current_user_id") Integer userId,@RequestBody ConnectionResponsReq c)
+    {
+        return connectionService.connectionRespond(c,userId);
+    }
 }

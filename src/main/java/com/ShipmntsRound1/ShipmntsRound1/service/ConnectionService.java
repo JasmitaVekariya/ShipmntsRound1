@@ -58,7 +58,7 @@ public class ConnectionService {
     {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new RuntimeException("User is not found"));
-        if(c == null)
+        if(c == null || c.getConnectionId() == null || c.getAction() == null)
             throw new RuntimeException("connectionId and action are required");
 
         if(!c.getAction().equals("ACCEPT"))
@@ -83,8 +83,7 @@ public class ConnectionService {
             connection.setRejectedAt(LocalDateTime.now());
         }
         connectionRepository.save(connection);
-
-        return   new ConnectionResponsRes(
+        ConnectionResponsRes res = new ConnectionResponsRes(
                 connection.getId(),
                 connection.getFromUserId(),
                 connection.getToUser().getId(),
@@ -93,6 +92,9 @@ public class ConnectionService {
                 connection.getAcceptedAt(),
                 connection.getRejectedAt()
         );
+        if(res == null)
+            throw new RuntimeException("ans is null");
+        return res;
     }
 
 }
